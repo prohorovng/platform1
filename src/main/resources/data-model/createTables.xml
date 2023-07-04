@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        https://nexus.apps.envone.dev.registry.eua.gov.ua/nexus/repository/extensions/com/epam/digital/data/platform/liquibase-ext-schema/latest/liquibase-ext-schema-latest.xsd">
+
+
+    <changeSet id="table weapon genus" author="nick">
+        <createTable tableName="weapon_genus" remarks="Довідник виду зброї">
+            <ext:historyFlag>"true"</ext:historyFlag>
+            <column name="weapon_genus_id" type="NUMERIC" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_weapon_genus_id"/>
+            </column>
+
+            <column name="description" type="TEXT" remarks="Опис">
+                <constraints nullable="true"/>
+            </column>
+            <column name="name" type="TEXT" remarks="Назва">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet> <!-- of a weapon genus -->
+
+    <changeSet id="table weapon mark" author="nick">
+        <createTable tableName="table_weapon_mark" remarks="Довідник марки зброї">
+            <ext:historyFlag>"true"</ext:historyFlag>
+            <column name="weapon_mark_id" type="TEXT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_weapon_mark_id"/>
+            </column>
+            <column name="name" type="TEXT" remarks="Назва зброї">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="abbreviation" type="TEXT" remarks="Абревiатура">
+                <constraints nullable="true" />
+            </column>
+            <column name="description" type="TEXT" remarks="Опис">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet> <!-- of a weapon mark -->
+
+    <changeSet id="table weapon model" author="nick">
+        <createTable tableName="weapon_model" remarks="Довідник моделі зброї">
+            <ext:historyFlag>"true"</ext:historyFlag>
+            <column name="weapon_model_id" type="TEXT" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_weapon_model_id"/>
+            </column>
+            <column name="model" type="TEXT" remarks="Модель зброї">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet> <!-- of a weapon model -->
+
+
+    <changeSet id="table person" author="nick">
+        <createTable tableName="person" remarks="Персона">
+            <ext:historyFlag>"true"</ext:historyFlag>
+            <column name="person_id"
+                    type="UUID"
+                    defaultValueComputed="uuid_generate_v4()">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_person_id"/>
+            </column>
+            <column name="fullName" type="TEXT" remarks="ПIБ">
+                <constraints nullable="false" />
+            </column>
+            <column name="settlement" type="TEXT" remarks="Населений пункт">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number" type="TEXT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="TEXT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="rnokpp" type="TEXT">
+                <constraints nullable="true" unique="true" />
+            </column>
+            <column name="medicine" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="medicine_date" type="DATE">
+                <constraints nullable="true" unique="false" />
+            </column>
+
+            <column name="expiration_date" type="DATE">
+                <constraints nullable="true" unique="false" />
+            </column>
+
+
+
+
+        </createTable>
+    </changeSet> <!-- of a person -->
+
+
+    <changeSet id="weapon" author="nick">
+        <createTable tableName="weapon" remarks="Зброя">
+            <ext:historyFlag>"true"</ext:historyFlag>
+            <column name="weapon_id" type="NUMERIC" autoIncrement="true">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="pk_weapon_id"/>
+            </column>
+            <column name="person_id" type="UUID">
+                <constraints nullable="false"
+                             foreignKeyName="fk_person"
+                             referencedTableName="person"
+                             referencedColumnNames="person_id"/>
+            </column>
+            <column name="weapon_genus_id" type="NUMERIC">
+                <constraints nullable="false"
+                             foreignKeyName="fk_weapon_genus"
+                             referencedTableName="weapon_genus"
+                             referencedColumnNames="weapon_genus_id"/>
+            </column>
+            <column name="weapon_mark_id" type="TEXT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_weapon_mark"
+                             referencedTableName="weapon_mark"
+                             referencedColumnNames="weapon_mark_id"/>
+            </column>
+            <column name="weapon_model_id" type="TEXT">
+                <constraints nullable="false"
+                             foreignKeyName="fk_weapon_model"
+                             referencedTableName="weapon_model"
+                             referencedColumnNames="weapon_model_id"/>
+            </column>
+            <column name="production_date" type="DATE">
+                <constraints nullable="true"/>
+                 </column>
+            <column name="registration_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ballistic_test" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet> <!-- of a weapon -->
+
+
+
+
+</databaseChangeLog>
+
+
+
+
