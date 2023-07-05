@@ -7,6 +7,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext
         https://nexus.apps.envone.dev.registry.eua.gov.ua/nexus/repository/extensions/com/epam/digital/data/platform/liquibase-ext-schema/latest/liquibase-ext-schema-latest.xsd">
-    <include file="data-model/createTables.xml"/>
+    <include file="/data-model/createMineralsTables.xml"/>
 
 </databaseChangeLog>

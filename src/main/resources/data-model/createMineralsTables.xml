@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        https://nexus.apps.envone.dev.registry.eua.gov.ua/nexus/repository/extensions/com/epam/digital/data/platform/liquibase-ext-schema/latest/liquibase-ext-schema-latest.xsd">
+
+    <!-- Table: deposit -->
+    <changeSet id="table deposit" author="a.voloschenko@indevlab.com">
+        <createTable tableName="deposit" remarks="Довідник родовищ">
+            <column name="deposit_id" type="UUID" defaultValueComputed="uuid_generate_v4()">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_deposit_id"/>
+            </column>
+            <column name="location" type="TEXT" remarks="Місце розташування">
+                <constraints nullable="false"/>
+            </column>
+            <column name="area" type="NUMERIC" remarks="Площа родовища">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deposit_type" type="TEXT" remarks="Тип родовища">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mineral_type" type="TEXT" remarks="Тип корисних копалин">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deposit_area" type="NUMERIC" remarks="Площа ділянки родовища">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Table: licensee -->
+    <changeSet id="table licensee" author="a.voloschenko@indevlab.com">
+        <createTable tableName="licensee" remarks="Довідник отримувачів ліцензій">
+            <column name="licensee_id" type="UUID" defaultValueComputed="uuid_generate_v4()">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_licensee_id"/>
+            </column>
+            <column name="name" type="TEXT" remarks="ПІБ">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contacts" type="TEXT" remarks="Контакти">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rnokpp" type="TEXT" remarks="РНОКПП">
+                <constraints nullable="true" unique="true"/>
+            </column>
+            <column name="person_type" type="TEXT" remarks="Тип особи">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Table: license -->
+    <changeSet id="table license" author="a.voloschenko@indevlab.com">
+        <createTable tableName="license" remarks="Довідник ліцензій">
+            <column name="license_id" type="UUID" defaultValueComputed="uuid_generate_v4()">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_license_id"/>
+            </column>
+            <column name="obtained_date" type="DATE" remarks="Дата отримання">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiry_date" type="DATE" remarks="Термін дії">
+                <constraints nullable="false"/>
+            </column>
+            <column name="licensee_id" type="UUID" remarks="Отримувач ліцензії">
+                <constraints nullable="false" foreignKeyName="fk_licensee" referencedTableName="licensee" referencedColumnNames="licensee_id"/>
+            </column>
+            <column name="mining_type" type="TEXT" remarks="Тип добичі копалин">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Join Table: deposit_license -->
+    <changeSet id="table deposit_license" author="a.voloschenko@indevlab.com">
+        <createTable tableName="deposit_license" remarks="Таблиця зв'язку між родовищем і ліцензією">
+            <column name="deposit_id" type="UUID" defaultValueComputed="uuid_generate_v4()" remarks="Родовище">
+                <constraints nullable="false" foreignKeyName="fk_deposit" referencedTableName="deposit" referencedColumnNames="deposit_id"/>
+            </column>
+            <column name="license_id" type="UUID" remarks="Ліцензія">
+                <constraints nullable="false" foreignKeyName="fk_license" referencedTableName="license" referencedColumnNames="license_id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
