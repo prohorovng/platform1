@@ -11,6 +11,7 @@
     <!-- Table: deposit -->
     <changeSet id="table deposit" author="a.voloschenko@indevlab.com">
         <createTable tableName="deposit" remarks="Довідник родовищ">
+            <ext:historyFlag>"true"</ext:historyFlag>
             <column name="deposit_id" type="UUID" defaultValueComputed="uuid_generate_v4()">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_deposit_id"/>
             </column>
@@ -35,6 +36,7 @@
     <!-- Table: licensee -->
     <changeSet id="table licensee" author="a.voloschenko@indevlab.com">
         <createTable tableName="licensee" remarks="Довідник отримувачів ліцензій">
+            <ext:historyFlag>"true"</ext:historyFlag>
             <column name="licensee_id" type="UUID" defaultValueComputed="uuid_generate_v4()">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_licensee_id"/>
             </column>
@@ -56,6 +58,7 @@
     <!-- Table: license -->
     <changeSet id="table license" author="a.voloschenko@indevlab.com">
         <createTable tableName="license" remarks="Довідник ліцензій">
+            <ext:historyFlag>"true"</ext:historyFlag>
             <column name="license_id" type="UUID" defaultValueComputed="uuid_generate_v4()">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_license_id"/>
             </column>
@@ -77,6 +80,7 @@
     <!-- Join Table: deposit_license -->
     <changeSet id="table deposit_license" author="a.voloschenko@indevlab.com">
         <createTable tableName="deposit_license" remarks="Таблиця зв'язку між родовищем і ліцензією">
+            <ext:historyFlag>"true"</ext:historyFlag>
             <column name="deposit_id" type="UUID" defaultValueComputed="uuid_generate_v4()" remarks="Родовище">
                 <constraints nullable="false" foreignKeyName="fk_deposit" referencedTableName="deposit" referencedColumnNames="deposit_id"/>
             </column>
